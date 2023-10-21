@@ -1,10 +1,43 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<video autoplay controls fullscreen>
+<body onload="playAudio()">
+  <audio id="myAudio" autoplay>
+    <source src="audio.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    function playAudio() {
+      var myAudio = document.getElementById("myAudio");
+      myAudio.play();
+      
+ <title>Tắt Nhạc</title>
+ <style>
+  button {
+   font-size: 1em;
+   padding: 10px;
+   background-color: #4CAF50;
+   color: white;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+  }
+ </style>
+</head>
+<body>
+ <button onclick="playVideo()">Tắt Video</button>
+
+ <video id="myVideo" width="320" height="240">
   <source src="video.mp4" type="video/mp4">
-</video>
+ </video>
+
+ <script>
+  function playVideo() {
+   var video = document.getElementById("myVideo");
+   video.play();
+   document.getElementsByTagName("button")[0].style.fontSize = "2em";
+   document.getElementsByTagName("button")[0].disabled = true;
+ 
     }
   </script>
 </body>
-</html>
