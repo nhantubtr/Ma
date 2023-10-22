@@ -1,46 +1,70 @@
-</html>
+```html
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Trang web yêu cầu nhập mật khẩu</title>
+  <title>Trang web bảo mật</title>
+  
+  <style>
+    body {
+      background-image: url("background.jpg");
+      background-size: cover;
+      text-align: center;
+      font-size: 24px;
+      color: white;
+      padding-top: 200px;
+    }
+    h1 {
+      font-size: 48px;
+    }
+    input[type=password] {
+      padding: 10px;
+      font-size: 18px;
+    }
+    input[type=submit] {
+      padding: 8px 20px;
+      margin-top: 10px;
+      font-size: 18px;
+      background-color: #4CAF50;
+      color: white;
+      border: 1px solid #4CAF50;
+      cursor: pointer;
+    }
+    input[type=submit]:hover {
+      background-color: #45a049;
+    }
+  </style>
 </head>
 <body>
-    <h1>Trang web yêu cầu nhập mật khẩu</h1>
-    <form id="passwordForm" onsubmit="checkPassword(); return false;">
-        <label for="password">Mật khẩu:</label>
-        <input type="password" id="password" name="password" required>
-        <button type="submit">Xác nhận</button>
-    </form>
-    <div id="videoContainer" style="display: none;">
-        <h2>Đoạn video</h2>
-        <video controls>
-            <source src="video.mp4" type="video/mp4">
-        </video>
-        <h2>Đoạn video 2</h2>
-        <video controls>
-            <source src="dit.mp4" type="video/mp4">
-        </video>
-        <h2>Đoạn video 3</h2>
-        <video controls>
-            <source src="lac.mp4" type="video/mp4">
-        </video>
-    </div>
+  <h1>Trang web bảo mật</h1>
+  
+  <form action="protected-page.html" method="post">
+    <label for="password">Nhập mật khẩu:</label>
+    <br>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <input type="submit" value="Đăng nhập">
+  </form>
+  
+  <audio id="audio" src="nhac.mp3"></audio>
+  
+  <script>
+    var audio = document.getElementById("audio");
     
-    <div id="wrongPasswordMsg" style="display: none; color: red;">Sai mật khẩu!</div>
-    
-    <script>
-        function checkPassword() {
-            var password = document.getElementById("password").value;
-            var correctPassword = "290326";
-
-            if (password === correctPassword) {
-                document.getElementById("passwordForm").style.display = "none";
-                document.getElementById("videoContainer").style.display = "block";
-                document.getElementById("wrongPasswordMsg").style.display = "none";
-            } else {
-                document.getElementById("wrongPasswordMsg").style.display = "block";
-            }
-        }
-    </script>
+    // Kiểm tra mật khẩu khi người dùng nhấn nút submit
+    document.querySelector("form").addEventListener("submit", function(event){
+      event.preventDefault(); // Ngăn chặn việc gửi form
+      
+      var password = document.getElementById("password").value;
+      
+      // Kiểm tra mật khẩu và phát video hoặc âm thanh tương ứng
+      if (password === "290326") {
+        window.location.href = "protected-page.html";
+      } else {
+        alert("Sai mật khẩu!");
+        audio.play();
+      }
+    });
+  </script>
 </body>
 </html>
+```
