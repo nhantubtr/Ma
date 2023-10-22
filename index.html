@@ -1,101 +1,65 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Trang web yêu cầu mật khẩu</title>
-    <style>
-        body {
-            background-color: #f2f2f2;
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
-        
-        .password-form {
-            margin-top: 200px;
-        }
-        
-        .password-input {
-            padding: 10px;
-            font-size: 16px;
-        }
-        
-        .submit-button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .error-message {
-            color: red;
-            margin-top: 20px;
-        }
-        
-        #video-container {
-            display: none;
-            margin-top: 50px;
-        }
-        
-        .video-wrapper {
-            display: inline-block;
-            margin: 10px;
-        }
-        
-        video {
-            width: 400px;
-            height: 300px;
-            margin-bottom: 20px;
-        }
-    </style>
-    <script>
-        function checkPassword() {
-            var password = document.getElementById("password").value;
-            if (password === "290326") {
-                document.getElementById("password-form").style.display = "none";
-                document.getElementById("video-container").style.display = "block";
-                playVideos();
-            } else {
-                document.getElementById("error-message").style.display = "block";
-                var audio = new Audio("audio.mp3");
-                audio.play();
-            }
-        }
-        
-        function playVideos() {
-            var videos = document.getElementsByTagName("video");
-            for (var i = 0; i < videos.length; i++) {
-                videos[i].play();
-            }
-        }
-    </script>
+  <title>Trang web yêu cầu mật khẩu</title>
+  <style>
+    body {
+      background-color: #f2f2f2;
+      text-align: center;
+    }
+    
+    .container {
+      margin-top: 200px;
+    }
+    
+    input[type="password"] {
+      padding: 10px;
+      font-size: 16px;
+    }
+    
+    .video-row {
+      display: flex;
+      justify-content: center;
+      margin-top: 50px;
+    }
+    
+    video {
+      margin: 0 10px;
+    }
+  </style>
 </head>
 <body>
-    <div class="password-form" id="password-form">
-        <h1>Trang web yêu cầu mật khẩu</h1>
-        <input type="password" id="password" class="password-input" placeholder="Nhập mật khẩu">
-        <br>
-        <button class="submit-button" onclick="checkPassword()">Submit</button>
-        <div class="error-message" id="error-message" style="display: none;">Sai mật khẩu!</div>
+  <div class="container">
+    <form onsubmit="checkPassword(event)">
+      <input type="password" id="passwordInput" placeholder="Nhập mật khẩu" required>
+      <br>
+      <button type="submit">Xác nhận</button>
+    </form>
+  </div>
+  
+  <div id="videoPlayer" style="display: none;">
+    <div class="video-row">
+      <video controls src="video.mp4" width="320" height="240"></video>
+      <video controls src="lac.MP4" width="320" height="240"></video>
+      <video controls src="dit.mp4" width="320" height="240"></video>
     </div>
-    
-    <div id="video-container">
-        <div class="video-wrapper">
-            <video controls>
-                <source src="video.mp4" type="video/mp4">
-            </video>
-        </div>
-        <div class="video-wrapper">
-            <video controls>
-                <source src="lac.MP4" type="video/mp4">
-            </video>
-        </div>
-        <div class="video-wrapper">
-            <video controls>
-                <source src="dit.MP4" type="video/mp4">
-            </video>
-        </div>
-    </div>
+  </div>
+  
+  <script>
+    function checkPassword(event) {
+      event.preventDefault();
+      var password = document.getElementById("passwordInput").value;
+      if (password === "290326") {
+        document.getElementById("videoPlayer").style.display = "block";
+        document.getElementById("passwordInput").value = "";
+      } else {
+        alert("Sai mật khẩu!");
+        var audio = new Audio("audio.mp3");
+        audio.play();
+      }
+    }
+  </script>
 </body>
 </html>
