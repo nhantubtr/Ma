@@ -1,64 +1,46 @@
+</html>
 <!DOCTYPE html>
 <html>
 <head>
- <title>Trang web cần nhập mật khẩu</title>
- <style type="text/css">
-  body {
-   background-color: #f2f2f2;
-   font-family: Arial, sans-serif;
-   color: #333;
-  }
-  h1 {
-   text-align: center;
-   margin-top: 50px;
-  }
-  form {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   margin-top: 50px;
-  }
-  input[type="password"] {
-   padding: 10px;
-   border-radius: 5px;
-   border: none;
-   margin-bottom: 20px;
-   font-size: 16px;
-  }
-  button[type="submit"] {
-   padding: 10px 20px;
-   border-radius: 5px;
-   border: none;
-   background-color: #4CAF50;
-   color: #fff;
-   font-size: 16px;
-   cursor: pointer;
-  }
-  video {
-   display: block;
-   margin: 50px auto;
-   max-width: 100%;
-  }
- </style>
+    <title>Trang web yêu cầu nhập mật khẩu</title>
 </head>
 <body>
- <h1>Trang web cần nhập mật khẩu</h1>
- <form method="post">
-  <label for="password">Mật khẩu:</label>
-  <input type="password" id="password" name="password" required>
-  <button type="submit">Xem nội dung</button>
- </form>
+    <h1>Trang web yêu cầu nhập mật khẩu</h1>
+    <form id="passwordForm" onsubmit="checkPassword(); return false;">
+        <label for="password">Mật khẩu:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Xác nhận</button>
+    </form>
+    <div id="videoContainer" style="display: none;">
+        <h2>Đoạn video</h2>
+        <video controls>
+            <source src="video.mp4" type="video/mp4">
+        </video>
+        <h2>Đoạn video 2</h2>
+        <video controls>
+            <source src="dit.mp4" type="video/mp4">
+        </video>
+        <h2>Đoạn video 3</h2>
+        <video controls>
+            <source src="lac.mp4" type="video/mp4">
+        </video>
+    </div>
+    
+    <div id="wrongPasswordMsg" style="display: none; color: red;">Sai mật khẩu!</div>
+    
+    <script>
+        function checkPassword() {
+            var password = document.getElementById("password").value;
+            var correctPassword = "290326";
 
- <?php
- if (isset($_POST['password'])) {
-  if ($_POST['password'] == '290326') {
-   echo '<video controls autoplay><source src="chau.mp4" type="video/mp4"></video>';
-            echo '<video controls autoplay><source src="dit.mp4" type="video/mp4"></video>';
-            echo '<video controls autoplay><source src="lac.mp4" type="video/mp4"></video>';
-  } else {
-   echo '<p style="text-align: center; color: red;">Mật khẩu không đúng. Vui lòng nhập lại!</p>';
-  }
- }
- ?>
+            if (password === correctPassword) {
+                document.getElementById("passwordForm").style.display = "none";
+                document.getElementById("videoContainer").style.display = "block";
+                document.getElementById("wrongPasswordMsg").style.display = "none";
+            } else {
+                document.getElementById("wrongPasswordMsg").style.display = "block";
+            }
+        }
+    </script>
 </body>
 </html>
