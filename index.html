@@ -7,6 +7,7 @@
         body {
             background-color: #f2f2f2;
             text-align: center;
+            font-family: Arial, sans-serif;
         }
         
         .password-form {
@@ -32,9 +33,15 @@
             margin-top: 20px;
         }
         
-        video {
+        #video-container {
             display: none;
             margin-top: 50px;
+        }
+        
+        video {
+            width: 400px;
+            height: 300px;
+            margin-bottom: 20px;
         }
     </style>
     <script>
@@ -43,23 +50,32 @@
             if (password === "290326") {
                 document.getElementById("password-form").style.display = "none";
                 document.getElementById("video-container").style.display = "block";
+                playVideos();
             } else {
                 document.getElementById("error-message").style.display = "block";
                 var audio = new Audio("audio.mp3");
                 audio.play();
             }
         }
+        
+        function playVideos() {
+            var videos = document.getElementsByTagName("video");
+            for (var i = 0; i < videos.length; i++) {
+                videos[i].play();
+            }
+        }
     </script>
 </head>
 <body>
     <div class="password-form" id="password-form">
+        <h1>Trang web yêu cầu mật khẩu</h1>
         <input type="password" id="password" class="password-input" placeholder="Nhập mật khẩu">
         <br>
         <button class="submit-button" onclick="checkPassword()">Submit</button>
         <div class="error-message" id="error-message" style="display: none;">Sai mật khẩu!</div>
     </div>
     
-    <div id="video-container" style="display: none;">
+    <div id="video-container">
         <video controls>
             <source src="video.mp4" type="video/mp4">
         </video>
