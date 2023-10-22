@@ -1,76 +1,74 @@
+
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Trang web yêu cầu mật khẩu</title>
     <style>
         body {
-            background-image: url('background.jpg');
-            background-size: cover;
-            font-size: 20px;
+            background-color: #f2f2f2;
             text-align: center;
-            color: white;
         }
-
-        input[type="password"] {
+        
+        .password-form {
+            margin-top: 200px;
+        }
+        
+        .password-input {
             padding: 10px;
-            font-size: 20px;
+            font-size: 16px;
         }
-
-        .error {
+        
+        .submit-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .error-message {
             color: red;
-            margin: 10px;
+            margin-top: 20px;
         }
-
-        .video-container {
-            display: flex;
-            justify-content: center;
+        
+        video {
+            display: none;
             margin-top: 50px;
         }
     </style>
+    <script>
+        function checkPassword() {
+            var password = document.getElementById("password").value;
+            if (password === "290326") {
+                document.getElementById("password-form").style.display = "none";
+                document.getElementById("video-container").style.display = "block";
+            } else {
+                document.getElementById("error-message").style.display = "block";
+                var audio = new Audio("audio.mp3");
+                audio.play();
+            }
+        }
+    </script>
 </head>
-
 <body>
-    <h2>Nhập mật khẩu để truy cập:</h2>
-    <form id="password-form">
-        <input type="password" id="password-input" required>
-        <button type="submit">Xác nhận</button>
-    </form>
-
-    <div id="error-message" class="error"></div>
-
-    <div class="video-container">
-        <video id="Vú Bật Viết" width="500" height="300">
+    <div class="password-form" id="password-form">
+        <input type="password" id="password" class="password-input" placeholder="Nhập mật khẩu">
+        <br>
+        <button class="submit-button" onclick="checkPassword()">Submit</button>
+        <div class="error-message" id="error-message" style="display: none;">Sai mật khẩu!</div>
+    </div>
+    
+    <div id="video-container" style="display: none;">
+        <video controls>
             <source src="video.mp4" type="video/mp4">
         </video>
-        <video id=Lễ Tân Lắc Đít" width="500" height="300">
+        <video controls>
             <source src="lac.mp4" type="video/mp4">
         </video>
-        <video id=Châu Móc Lồn" width="500" height="300">
+        <video controls>
             <source src="dit.mp4" type="video/mp4">
         </video>
     </div>
-
-    <audio id="error-sound" src="audio.mp3"></audio>
-
-    <script>
-        const form = document.getElementById("password-form");
-        const passwordInput = document.getElementById("password-input");
-        const errorMessage = document.getElementById("error-message");
-        const videos = document.querySelectorAll("video");
-        const errorSound = document.getElementById("error-sound");
-
-        form.addEventListener("submit", function(event) {
-            event.preventDefault();
-            const password = passwordInput.value;
-
-            // Thay đổi mật khẩu thành mật khẩu mong muốn của bạn ở đây
-            const desiredPassword = "290326";
-            if (password === desiredPassword) {
-                videos.forEach(video => video.play());
-            } else {
-                errorMessage.innerHTML = "Mật khẩu không đúng!";
-                errorSound.play();
-            }
-        });
-    </script>
 </body>
 </html>
