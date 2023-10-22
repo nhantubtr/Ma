@@ -1,43 +1,123 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html>
 <head>
-<body onload="playAudio()">
-  <audio id="myAudio" autoplay>
-    <source src="audio.mp3" type="audio/mpeg">
-  </audio>
-
-  <script>
-    function playAudio() {
-      var myAudio = document.getElementById("myAudio");
-      myAudio.play();
-      
- <title>Tắt Nhạc</title>
- <style>
-  button {
-   font-size: 1em;
+ <title>Trang web cần nhập mật khẩu</title>
+ <style type="text/css">
+  body {
+   background-color: #f2f2f2;
+   font-family: Arial, sans-serif;
+   color: #333;
+  }
+  h1 {
+   text-align: center;
+   margin-top: 50px;
+  }
+  form {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin-top: 50px;
+  }
+  input[type="password"] {
    padding: 10px;
-   background-color: #4CAF50;
-   color: white;
-   border: none;
    border-radius: 5px;
+   border: none;
+   margin-bottom: 20px;
+   font-size: 16px;
+  }
+  button[type="submit"] {
+   padding: 10px 20px;
+   border-radius: 5px;
+   border: none;
+   background-color: #4CAF50;
+   color: #fff;
+   font-size: 16px;
    cursor: pointer;
+  }
+  video {
+   display: block;
+   margin: 50px auto;
+   max-width: 100%;
   }
  </style>
 </head>
 <body>
- <button onclick="playVideo()">Tắt Video</button>
+ <h1>Trang web cần nhập mật khẩu</h1>
+ <form method="post">
+  <label for="password">Mật khẩu:</label>
+  <input type="password" id="password" name="password" required>
+  <button type="submit">Xem nội dung</button>
+ </form>
+ <?php
+ if (isset($_POST['password'])) {
+  if ($_POST['password'] == '290326') {
+   <!DOCTYPE html>
+<html>
+<head>
+ <title>Trang web cần nhập mật khẩu</title>
+ <style type="text/css">
+  body {
+   background-color: #f2f2f2;
+   font-family: Arial, sans-serif;
+   color: #333;
+  }
+  h1 {
+   text-align: center;
+   margin-top: 50px;
+  }
+  form {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin-top: 50px;
+  }
+  input[type="password"] {
+   padding: 10px;
+   border-radius: 5px;
+   border: none;
+   margin-bottom: 20px;
+   font-size: 16px;
+  }
+  button[type="submit"] {
+   padding: 10px 20px;
+   border-radius: 5px;
+   border: none;
+   background-color: #4CAF50;
+   color: #fff;
+   font-size: 16px;
+   cursor: pointer;
+  }
+  video {
+   display: block;
+   margin: 50px auto;
+   max-width: 100%;
+  }
+ </style>
+</head>
+<body>
+ <h1>Trang web cần nhập mật khẩu</h1>
+ <form method="post">
+  <label for="password">Mật khẩu:</label>
+  <input type="password" id="password" name="password" required>
+  <button type="submit">Xem nội dung</button>
+ </form>
 
- <video id="myVideo" width="320" height="240">
-  <source src="video.mp4" type="video.mp4">
- </video>
-
- <script>
-  function playVideo() {
-   var video = document.getElementById("myVideo");
-   video.play();
-   document.getElementsByTagName("button")[0].style.fontSize = "2em";
-   document.getElementsByTagName("button")[0].disabled = true;
- 
-    }
-  </script>
+ <?php
+ if (isset($_POST['password'])) {
+  if ($_POST['password'] == '290326') {
+   echo '<video controls autoplay><source src="video.mp4" type="video/mp4"></video>';
+   echo '<video controls autoplay><source src="video.mp4" type="chau/mp4"></video>';
+   echo '<video controls autoplay><source src="video.mp4" type="dit/mp4"></video>';
+  } else {
+   echo '<p style="text-align: center; color: red;">Mật khẩu không đúng. Vui lòng nhập lại!</p>';
+  }
+ }
+ ?>
 </body>
+</html>
+   echo '<p style="text-align: center; color: red;">Mật khẩu không đúng. Vui lòng nhập lại!</p>';
+  }
+ }
+ ?>
+</body>
+</html>
