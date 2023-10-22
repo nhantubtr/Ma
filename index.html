@@ -1,68 +1,76 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Trang web bảo mật</title>
-  
-  <style>
-    body {
-      background-image: url("background.jpg");
-      background-size: cover;
-      text-align: center;
-      font-size: 24px;
-      color: white;
-      padding-top: 200px;
-    }
-    h1 {
-      font-size: 48px;
-    }
-    input[type=password] {
-      padding: 10px;
-      font-size: 18px;
-    }
-    input[type=submit] {
-      padding: 8px 20px;
-      margin-top: 10px;
-      font-size: 18px;
-      background-color: #4CAF50;
-      color: white;
-      border: 1px solid #4CAF50;
-      cursor: pointer;
-    }
-    input[type=submit]:hover {
-      background-color: #45a049;
-    }
-  </style>
+    <style>
+        body {
+            background-image: url('background.jpg');
+            background-size: cover;
+            font-size: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        input[type="password"] {
+            padding: 10px;
+            font-size: 20px;
+        }
+
+        .error {
+            color: red;
+            margin: 10px;
+        }
+
+        .video-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+    </style>
 </head>
+
 <body>
-  <h1>Trang web bảo mật</h1>
-  
-  <form action="protected-page.html" method="post">
-    <label for="password">Nhập mật khẩu:</label>
-    <br>
-    <input type="password" id="password" name="password" required>
-    <br>
-    <input type="submit" value="Đăng nhập">
-  </form>
-  
-  <audio id="audio" src="audio.mp3"></audio>
-  
-  <script>
-    var audio = document.getElementById("audio");
-    
-    // Kiểm tra mật khẩu khi người dùng nhấn nút submit
-    document.querySelector("form").addEventListener("submit", function(event){
-      event.preventDefault(); // Ngăn chặn việc gửi form
-      
-      var password = document.getElementById("password").value;
-      
-      // Kiểm tra mật khẩu và phát video hoặc âm thanh tương ứng
-      if (password === "290326") {
-        window.location.href = "protected-page.html";
-      } else {
-        alert("Sai mật khẩu!");
-        audio.play();
-      }
-    });
-  </script>
+    <h2>Nhập mật khẩu để truy cập:</h2>
+    <form id="password-form">
+        <input type="password" id="password-input" required>
+        <button type="submit">Xác nhận</button>
+    </form>
+
+    <div id="error-message" class="error"></div>
+
+    <div class="video-container">
+        <video id="Vú Bật Viết" width="500" height="300">
+            <source src="video.mp4" type="video/mp4">
+        </video>
+        <video id=Lễ Tân Lắc Đít" width="500" height="300">
+            <source src="lac.mp4" type="video/mp4">
+        </video>
+        <video id=Châu Móc Lồn" width="500" height="300">
+            <source src="dit.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <audio id="error-sound" src="audio.mp3"></audio>
+
+    <script>
+        const form = document.getElementById("password-form");
+        const passwordInput = document.getElementById("password-input");
+        const errorMessage = document.getElementById("error-message");
+        const videos = document.querySelectorAll("video");
+        const errorSound = document.getElementById("error-sound");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            const password = passwordInput.value;
+
+            // Thay đổi mật khẩu thành mật khẩu mong muốn của bạn ở đây
+            const desiredPassword = "290326";
+            if (password === desiredPassword) {
+                videos.forEach(video => video.play());
+            } else {
+                errorMessage.innerHTML = "Mật khẩu không đúng!";
+                errorSound.play();
+            }
+        });
+    </script>
 </body>
 </html>
