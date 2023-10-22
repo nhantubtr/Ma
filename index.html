@@ -38,6 +38,11 @@
             margin-top: 50px;
         }
         
+        .video-wrapper {
+            display: inline-block;
+            margin: 10px;
+        }
+        
         video {
             width: 400px;
             height: 300px;
@@ -76,15 +81,21 @@
     </div>
     
     <div id="video-container">
-        <video controls>
-            <source src="video.mp4" type="video/mp4">
-        </video>
-        <video controls>
-            <source src="lac.mp4" type="video/mp4">
-        </video>
-        <video controls>
-            <source src="dit.mp4" type="video/mp4">
-        </video>
+        <div class="video-wrapper">
+            <video controls>
+                <source src="video.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="video-wrapper">
+            <video controls>
+                <source src="lac.MP4" type="video/mp4">
+            </video>
+        </div>
+        <div class="video-wrapper">
+            <video controls>
+                <source src="dit.MP4" type="video/mp4">
+            </video>
+        </div>
     </div>
 </body>
 </html>
