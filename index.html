@@ -41,6 +41,7 @@
       display: none;
       width: 100%;
       height: 100%;
+      background-color: #fff;
     }
 
     #videos {
@@ -64,6 +65,11 @@
       width: 100%;
       height: 100%;
     }
+
+    /* Sửa lỗi khi nhập mật khẩu tự zoom lại gần làm lệch trang wed */
+    #content {
+      overflow: hidden;
+    }
   </style>
 </head>
 <body>
@@ -82,9 +88,11 @@
 
       <div id="videos">
         <video class="video" src="video.mp4" controls></video>
-     <video class="video" src="lac.MP4" controls></video>
+      </div>
+      <video class="video" src="lac.MP4" controls></video>
       </div>
 
+      
       <div id="images">
         <img class="image" src="anh.JPG" alt="Ảnh">
       </div>
@@ -98,7 +106,7 @@
       const password = document.getElementById("password").value;
 
       // Nếu mật khẩu chính xác thì hiển thị nội dung
-      if (password === "290326") {
+      if (password === "290336") {
         document.getElementById("content").style.display = "block";
       } else {
         alert("Mật khẩu không chính xác!");
@@ -110,5 +118,4 @@
   </script>
 </body>
 </html>
-
 
