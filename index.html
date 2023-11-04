@@ -1,96 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yêu cầu nhập mật khẩu</title>
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background-color: #fff;
-      font-family: sans-serif;
-      font-size: 16px;
-    }
-
-    .container {
-      width: 500px;
-      margin: 0 auto;
-    }
-
-    .form-group {
-      margin-bottom: 10px;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-
-    .btn {
-      background-color: #337ab7;
-      color: #fff;
-      padding: 10px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .video-container {
-      width: 500px;
-      height: 300px;
-      margin: 0 auto;
-    }
-  </style>
+    <title>Trang Web Bảo Mật</title>
 </head>
 <body>
-  <div class="container">
-    <h1>Yêu cầu nhập mật khẩu</h1>
-    <form action="" method="post">
-      <div class="form-group">
-        <label for="password">Mật khẩu</label>
-        <input type="password" id="password" name="password" />
-      </div>
-      <button type="submit" class="btn">Đăng nhập</button>
-    </form>
-
-    <div class="video-container">
-      <video src="video.mp4" controls></video>
-      <video src="lac.MP4" controls></video>
+    <div id="password-div">
+        <h2>Vui lòng nhập mật khẩu:</h2>
+        <input type="password" id="password-input">
+        <button onclick="checkPassword()">Xác nhận</button>
     </div>
-  </div>
+    <div id="video-div" style="display: none;">
+        <video controls>
+            <source src="video.mp4" type="video/mp4">
+            <source src="lac.MP4" type="video/mp4">
+        </video>
+    </div>
 
-  <script>
-    // Sửa lỗi khi nhập mật khẩu tự động zoom lại làm lệch web
-    window.addEventListener("keydown", function(event) {
-      if (event.keyCode === 13) {
-        event.preventDefault();
-      }
-    });
+    <script>
+        function checkPassword() {
+            var enteredPassword = document.getElementById("password-input").value;
 
-    // Kiểm tra mật khẩu
-    function checkPassword() {
-      const password = document.querySelector("#password").value;
-      if (password === "290326") {
-        // Mật khẩu đúng, hiển thị video
-        document.querySelector(".video-container").style.display = "block";
-      } else {
-        // Mật khẩu sai, thông báo lỗi
-        alert("Mật khẩu không đúng!");
-      }
-    }
-
-    // Xử lý form
-    document.querySelector("form").addEventListener("submit", function(event) {
-      event.preventDefault();
-      checkPassword();
-    });
-  </script>
+            if (enteredPassword === "290326") {
+                document.getElementById("password-div").style.display = "none";
+                document.getElementById("video-div").style.display = "block";
+            } else {
+                alert("Mật khẩu không chính xác!");
+                document.getElementById("password-input").value = "";
+            }
+        }
+    </script>
 </body>
 </html>
