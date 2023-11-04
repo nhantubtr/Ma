@@ -62,7 +62,7 @@
 
     <div class="video-container">
       <video src="video.mp4" controls></video>
-      <video src="lac.mp4" controls></video>
+      <video src="lac.MP4" controls></video>
     </div>
   </div>
 
@@ -72,6 +72,24 @@
       if (event.keyCode === 13) {
         event.preventDefault();
       }
+    });
+
+    // Kiểm tra mật khẩu
+    function checkPassword() {
+      const password = document.querySelector("#password").value;
+      if (password === "290326") {
+        // Mật khẩu đúng, hiển thị video
+        document.querySelector(".video-container").style.display = "block";
+      } else {
+        // Mật khẩu sai, thông báo lỗi
+        alert("Mật khẩu không đúng!");
+      }
+    }
+
+    // Xử lý form
+    document.querySelector("form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      checkPassword();
     });
   </script>
 </body>
