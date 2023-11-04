@@ -70,6 +70,52 @@
     #content {
       overflow: hidden;
     }
+
+    /* Tối ưu giao diện trang wed */
+    #wrapper {
+      border-radius: 5px;
+    }
+
+    #login {
+      border-radius: 5px;
+    }
+
+    #password {
+      border-radius: 5px;
+    }
+
+    #submit {
+      border-radius: 5px;
+    }
+
+    #videos, #images {
+      border-radius: 5px;
+    }
+
+    /* Thêm màu sắc cho trang wed */
+    #wrapper {
+      background-color: #f5f5f5;
+    }
+
+    #login {
+      background-color: #ccc;
+    }
+
+    #password {
+      background-color: #eee;
+    }
+
+    #submit {
+      background-color: #000;
+    }
+
+    #videos {
+      background-color: #ccc;
+    }
+
+    #images {
+      background-color: #ddd;
+    }
   </style>
 </head>
 <body>
@@ -89,33 +135,15 @@
       <div id="videos">
         <video class="video" src="video.mp4" controls></video>
       </div>
-      <video class="video" src="lac.MP4" controls></video>
-      </div>
 
-      
       <div id="images">
-        <img class="image" src="anh.JPG" alt="Ảnh">
+        <img class="image" src="lac.MP4" alt="Ảnh">
       </div>
     </div>
   </div>
 
   <script>
     // Hàm kiểm tra mật khẩu
-    function checkPassword() {
+    function checkPassword(290326) {
       // Lấy mật khẩu từ input
-      const password = document.getElementById("password").value;
-
-      // Nếu mật khẩu chính xác thì hiển thị nội dung
-      if (password === "290336") {
-        document.getElementById("content").style.display = "block";
-      } else {
-        alert("Mật khẩu không chính xác!");
-      }
-    }
-
-    // Sự kiện click vào button đăng nhập
-    document.getElementById("submit").addEventListener("click", checkPassword);
-  </script>
-</body>
-</html>
-
+      const password = document.getElementById
