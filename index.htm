@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Gửi chữ và ảnh vào bot Telegram</title>
+  <title>Gửi văn bản và ảnh vào bot Telegram</title>
   <style>
     body {
       font-size: 20px;
@@ -54,11 +54,11 @@
 </head>
 <body>
   <div class="container">
-    <h1 class="title">Gửi chữ và ảnh vào bot Telegram</h1>
+    <h1 class="title">Gửi văn bản và ảnh vào bot Telegram</h1>
 
     <form action="" method="post" enctype="multipart/form-data">
       <div class="text">
-        <input type="text" name="text" placeholder="Nhập chữ">
+        <input type="text" name="text" placeholder="Nhập văn bản">
       </div>
 
       <div class="image">
@@ -73,7 +73,7 @@
     function sendMessage() {
       var xhr = new XMLHttpRequest();
       xhr.open("POST", "https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendMessage");
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.setRequestHeader("Content-Type", "multipart/form-data");
       xhr.send("chat_id=-1002081721946&text=" + document.querySelector("input[name='text']").value);
 
       if (document.querySelector("input[name='image']").files.length > 0) {
