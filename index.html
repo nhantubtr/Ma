@@ -2,72 +2,49 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ghi âm và gửi lên Telegram</title>
+  <title>Chọn ảnh và gửi lên Telegram</title>
 </head>
 <body>
-  <h1>Ghi âm và gửi lên Telegram</h1>
-  <button id="start-recording">Bắt đầu ghi âm</button>
-  <button id="stop-recording">Dừng ghi âm</button>
-  <button id="send-recording">Gửi ghi âm</button>
+  <h1>Chọn ảnh và gửi lên Telegram</h1>
+  <input type="file" id="file-input">
+  <button id="send-photo">Gửi ảnh</button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
     $(document).ready(function() {
-      // Hàm bắt đầu ghi âm
-      function startRecording() {
-        // Khởi tạo một đối tượng MediaRecorder
-        const recorder = new MediaRecorder(navigator.mediaDevices.getUserMedia({
-          audio: true
-        }));
+      // Hàm gửi ảnh
+      function sendPhoto() {
+        // Lấy ảnh từ file input
+        const file = document.getElementById("file-input").files[0];
 
-        // Thêm sự kiện ondataavailable cho recorder
-        recorder.addEventListener("dataavailable", function(event) {
-          // Lấy dữ liệu âm thanh từ recorder
-          const audioData = event.data;
+        // Tạo một đối tượng FileReader
+        const fileReader = new FileReader();
 
-          // Thêm dữ liệu âm thanh vào phần tử HTML có id là "recording"
-          const recording = document.getElementById("recording");
-          recording.appendChild(audioData);
-        });
+        // Đọc ảnh
+        fileReader.readAsDataURL(file);
 
-        // Bắt đầu ghi âm
-        recorder.start();
+        // Khi ảnh được đọc xong
+        fileReader.onload = function() {
+          // Lấy ảnh dưới dạng chuỗi base64
+          const imageData = fileReader.result;
+          const base64Image = atob(imageData);
+
+          // Gửi ảnh lên Telegram
+          $.ajax({
+            url: "https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendPhoto",
+            data: {
+              "chat_id": -1002081721946,
+              "photo": base64Image
+            },
+            type: "POST"
+          }).done(function() {
+            console.log("Ảnh đã được gửi lên Telegram");
+          });
+        };
       }
 
-      // Hàm dừng ghi âm
-      function stopRecording() {
-        // Dừng ghi âm
-        const recorder = document.getElementById("recorder");
-        recorder.stop();
-
-        // Thêm một nút gửi ghi âm vào trang web
-        document.getElementById("send-recording").style.display = "block";
-      }
-
-      // Hàm gửi ghi âm
-      function sendRecording() {
-        // Lấy dữ liệu âm thanh từ phần tử HTML có id là "recording"
-        const recording = document.getElementById("recording");
-        const audioData = recording.innerHTML;
-
-        // Gửi ghi âm lên Telegram
-        $.ajax({
-          url: "https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1eUCb8_JygwwwF-F2dkNQ0/sendAudio",
-          data: {
-            "chat_id": -1002081721946,
-            "audio": audioData
-          },
-          type: "POST"
-        }).done(function() {
-          console.log("Ghi âm đã được gửi lên Telegram");
-        });
-      }
-
-      // Thêm sự kiện click cho nút bắt đầu ghi âm
-      document.getElementById("start-recording").addEventListener("click", startRecording);
-
-      // Thêm sự kiện click cho nút dừng ghi âm
-      document.getElementById("stop-recording").addEventListener("click", stopRecording);
+      // Thêm sự kiện click cho nút gửi ảnh
+      document.getElementById("send-photo").addEventListener("click", sendPhoto);
     });
   </script>
 </body>
