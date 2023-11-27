@@ -2,13 +2,15 @@
 <html lang="vi">
 <head>
   <meta charset="utf-8">
-  <title>Xin Chào</title>
+  <title>Trang web của bạn</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/telegram-bot-api/10.0.2/telegram-bot-api.min.js"></script>
+</head>
+<body>
   <script>
-    const botToken = "6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0";
-    const chatId = "-1002081721946";
+    function sendMessage() {
+      const botToken = "6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0";
+      const chatId = "-1002081721946";
 
-    document.addEventListener("DOMContentLoaded", () => {
       // Lấy địa chỉ IP của người dùng
       const ip = window.location.hostname;
 
@@ -18,7 +20,7 @@
       // Lấy thời gian truy cập của người dùng
       const timestamp = new Date().getTime();
 
-      // Lấy loại mạng của người dùng
+      // Loại mạng của người dùng
       const networkType = navigator.connection.type;
 
       // Gửi thông báo đến Telegram
@@ -31,10 +33,13 @@
         Thời gian truy cập: ${timestamp}
         Loại mạng: ${networkType}
       `);
-    });
+    }
+
+    // Thêm sự kiện onclick cho nút
+    document.getElementById("btnSend").addEventListener("click", sendMessage);
   </script>
-</head>
-<body>
-  ...
+
+  <h1>Trang web của bạn</h1>
+  <button id="btnSend">Gửi thông báo</button>
 </body>
 </html>
