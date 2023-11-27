@@ -1,98 +1,40 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Gửi dữ liệu vào bot Telegram</title>
+  <title>Gửi chữ và ảnh vào bot Telegram</title>
+  <style>
+    body {
+      font-size: 20px;
+      color: #ff00ff;
+    }
+  </style>
 </head>
-<body style="margin: 0 auto; padding: 0 20px; background-color: #fff; color: #ff00ff;">
-    <h1 style="font-size: 20px; text-align: center;">Gửi dữ liệu vào bot Telegram</h1>
+<body>
+  <h1>Gửi chữ và ảnh vào bot Telegram</h1>
+  <form action="" method="post">
+    <input type="text" name="text" placeholder="Nhập chữ">
+    <input type="file" name="image">
+    <input type="submit" value="Gửi">
+  </form>
 
-    <div class="alert alert-info" style="display: none;">
-        <strong>Chào mừng!</strong> Bạn đã truy cập trang web.
-    </div>
+  <script>
+    function sendMessage() {
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendMessage");
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.send("chat_id=-1002081721946&text=" + document.querySelector("input[name='text']").value);
 
-    <form action="" method="post" enctype="multipart/form-data">
-        <input type="text" name="ip" value="{{ navigator.ip }}" placeholder="IP">
-        <input type="text" name="device" value="{{ navigator.userAgent }}" placeholder="Tên thiết bị">
-        <input type="text" name="network" value="{{ new Date() }}" placeholder="Mạng đang sử dụng">
+      if (document.querySelector("input[name='image']").files.length > 0) {
+        var file = document.querySelector("input[name='image']").files[0];
 
-        <div class="row">
-            <div class="col-md-6">
-                <input type="file" name="image" accept="image/*" style="width: 200px;">
-            </div>
-            <div class="col-md-6">
-                <input type="file" name="file" accept="*" style="width: 200px;">
-            </div>
-        </div>
+        xhr = new XMLHttpRequest();
+        xhr.open("POST", "https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendPhoto");
+        xhr.setRequestHeader("Content-Type", "multipart/form-data");
+        xhr.send("chat_id=-1002081721946", file);
+      }
+    }
 
-        <textarea name="text" placeholder="Văn bản" style="width: 500px; height: 200px;"></textarea>
-
-        <button type="submit" style="background-color: #ff00ff;">Gửi</button>
-    </form>
-
-    <script>
-        let seen = false;
-
-        function showAlert() {
-            if (!seen) {
-                document.querySelector(".alert").style.display = "block";
-                seen = true;
-            }
-        }
-
-        window.onload = showAlert;
-
-        $(document).ready(function() {
-            $("form").submit(function(e) {
-                e.preventDefault();
-
-                var ip = $("input[name='ip']").val();
-                var device = $("input[name='device']").val();
-                var network = $("input[name='network']").val();
-
-                var image = $("input[name='image']").prop("files")[0];
-                var file = $("input[name='file']").prop("files")[0];
-                var text = $("textarea[name='text']").val();
-
-                var data = {
-                    ip: ip,
-                    device: device,
-                    network: network,
-                    image: image,
-                    file: file,
-                    text: text
-                };
-
-                $.ajax({
-                    url: "https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendMessage",
-                    method: "POST",
-                    data: JSON.stringify(data),
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                }).done(function(response) {
-                    console.log(response);
-                });
-            });
-        });
-
-        /* Thay đổi màu sắc và kích thước của giao diện web */
-
-        body {
-            background-image: linear-gradient(to right, #ff00ff, #00ff00);
-        }
-
-        h1 {
-            color: #000;
-        }
-
-        input, textarea {
-            border: 1px solid #000;
-            color: #ff00ff;
-        }
-
-        button {
-            border: none;
-            color: #ff00ff;
-        }
-    </script
+    document.querySelector("form").addEventListener("submit", sendMessage);
+  </script>
+</body>
+</html>
