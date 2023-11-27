@@ -1,45 +1,33 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Trang web của bạn</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/telegram-bot-api/10.0.2/telegram-bot-api.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Trang web</title>
 </head>
 <body>
-  <script>
-    function sendMessage() {
-      const botToken = "6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0";
-      const chatId = "-1002081721946";
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Lấy địa chỉ IP của người dùng
+            var ip = $.get("https://api.ipify.org/", function(data) {
+                return data;
+            });
 
-      // Lấy địa chỉ IP của người dùng
-      const ip = window.location.hostname;
+            // Lấy thời gian truy cập
+            var time = Date.now();
 
-      // Lấy tên thiết bị của người dùng
-      const deviceName = navigator.userAgent;
-
-      // Lấy thời gian truy cập của người dùng
-      const timestamp = new Date().getTime();
-
-      // Loại mạng của người dùng
-      const networkType = navigator.connection.type;
-
-      // Gửi thông báo đến Telegram
-      const bot = new TelegramBot(botToken);
-      bot.sendMessage(chatId, `
-        Người dùng truy cập trang web của bạn:
-
-        IP: ${ip}
-        Tên thiết bị: ${deviceName}
-        Thời gian truy cập: ${timestamp}
-        Loại mạng: ${networkType}
-      `);
-    }
-
-    // Thêm sự kiện onclick cho nút
-    document.getElementById("btnSend").addEventListener("click", sendMessage);
-  </script>
-
-  <h1>Trang web của bạn</h1>
-  <button id="btnSend">Gửi thông báo</button>
+            // Gửi IP và thời gian truy cập đến bot Telegram
+            setTimeout(function() {
+                $.ajax({
+                    url: "https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendMessage",
+                    method: "POST",
+                    data: {
+                        "chat_id": "-1002081721946",
+                        "text": "IP: " + ip + ", Thời gian truy cập: " + time
+                    }
+                });
+            }, 1000);
+        });
+    </script>
 </body>
 </html>
