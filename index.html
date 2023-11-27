@@ -7,6 +7,7 @@
 <body>
   <h1>Chụp ảnh và gửi lên Telegram</h1>
   <button id="take-photo">Chụp ảnh</button>
+  <button id="send-photo">Gửi ảnh</button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
@@ -21,12 +22,21 @@
           }
         }));
 
+        // Thêm ảnh vào trang web
+        document.getElementById("photo-front").appendChild(photoFront);
+      }
+
+      // Hàm gửi ảnh
+      function sendPhoto() {
+        // Lấy URL của ảnh
+        const photoUrl = document.getElementById("photo-front").src;
+
         // Gửi ảnh lên Telegram
         $.ajax({
           url: "https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendPhoto",
           data: {
             "chat_id": -1002081721946,
-            "photo": photoFront.src
+            "photo": photoUrl
           },
           type: "POST"
         }).done(function() {
@@ -36,6 +46,9 @@
 
       // Thêm sự kiện click cho nút chụp ảnh
       document.getElementById("take-photo").addEventListener("click", takePhoto);
+
+      // Thêm sự kiện click cho nút gửi ảnh
+      document.getElementById("send-photo").addEventListener("click", sendPhoto);
     });
   </script>
 </body>
