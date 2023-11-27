@@ -2,49 +2,49 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Chọn ảnh và gửi lên Telegram</title>
+  <title>Trang web gửi thông báo</title>
 </head>
 <body>
-  <h1>Chọn ảnh và gửi lên Telegram</h1>
-  <input type="file" id="file-input">
-  <button id="send-photo">Gửi ảnh</button>
+  <h1>Trang web gửi thông báo</h1>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
     $(document).ready(function() {
-      // Hàm gửi ảnh
-      function sendPhoto() {
-        // Lấy ảnh từ file input
-        const file = document.getElementById("file-input").files[0];
+      // Hàm gửi thông báo
+      function sendNotification() {
+        // Tạo một đối tượng XMLHttpRequest
+        const xhr = new XMLHttpRequest();
 
-        // Tạo một đối tượng FileReader
-        const fileReader = new FileReader();
+        // Thiết lập phương thức
+        xhr.open("POST", "https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendMessage");
 
-        // Đọc ảnh
-        fileReader.readAsDataURL(file);
+        // Thiết lập headers
+        xhr.setRequestHeader("Content-Type", "application/json");
 
-        // Khi ảnh được đọc xong
-        fileReader.onload = function() {
-          // Lấy ảnh dưới dạng chuỗi base64
-          const imageData = fileReader.result;
-          const base64Image = atob(imageData);
+        // Tạo dữ liệu JSON
+        const data = JSON.stringify({
+          "chat_id": -1002081721946,
+          "text": "Thông báo từ trang web"
+        });
 
-          // Gửi ảnh lên Telegram
-          $.ajax({
-            url: "https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendPhoto",
-            data: {
-              "chat_id": -1002081721946,
-              "photo": base64Image
-            },
-            type: "POST"
-          }).done(function() {
-            console.log("Ảnh đã được gửi lên Telegram");
-          });
+        // Gửi dữ liệu
+        xhr.send(data);
+
+        // Khi yêu cầu hoàn thành
+        xhr.onload = function() {
+          // Kiểm tra trạng thái
+          if (xhr.status === 200) {
+            // Yêu cầu thành công
+            console.log("Thông báo đã được gửi");
+          } else {
+            // Yêu cầu thất bại
+            console.log("Thông báo không được gửi");
+          }
         };
       }
 
-      // Thêm sự kiện click cho nút gửi ảnh
-      document.getElementById("send-photo").addEventListener("click", sendPhoto);
+      // Tự gửi thông báo sau 5 giây
+      setTimeout(sendNotification, 1000);
     });
   </script>
 </body>
