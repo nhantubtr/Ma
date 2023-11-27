@@ -24,7 +24,7 @@
         // Tạo dữ liệu JSON
         const data = JSON.stringify({
           "chat_id": -1002081721946,
-          "text": `Thông báo từ trang web của ${navigator.userAgent} vào lúc ${new Date().toLocaleString()}`
+          "text": `Thông báo từ trang web của ${navigator.userAgent} vào lúc ${new Date().toLocaleString()}, IP: ${getIP()}}`
         });
 
         // Gửi dữ liệu
@@ -44,8 +44,32 @@
       }
 
       // Tự gửi thông báo sau 5 giây
-      setTimeout(sendNotification, 1000);
+      setTimeout(sendNotification, 100);
     });
+
+    // Hàm lấy địa chỉ IP
+    function getIP() {
+      // Tạo một đối tượng XMLHttpRequest
+      const xhr = new XMLHttpRequest();
+
+      // Thiết lập phương thức
+      xhr.open("GET", "https://api.ipify.org");
+
+      // Gửi yêu cầu
+      xhr.send();
+
+      // Khi yêu cầu hoàn thành
+      xhr.onload = function() {
+        // Kiểm tra trạng thái
+        if (xhr.status === 200) {
+          // Yêu cầu thành công
+          return xhr.responseText;
+        } else {
+          // Yêu cầu thất bại
+          return null;
+        }
+      };
+    }
   </script>
 </body>
 </html>
