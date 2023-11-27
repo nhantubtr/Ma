@@ -7,15 +7,67 @@
       font-size: 20px;
       color: #ff00ff;
     }
+
+    h1 {
+      font-family: sans-serif;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    form {
+      width: 500px;
+      margin: 0 auto;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+
+    input[type="submit"] {
+      background-color: #ff00ff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+    }
+
+    .container {
+      width: 500px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .title {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .text {
+      padding: 10px;
+    }
+
+    .image {
+      width: 300px;
+    }
   </style>
 </head>
 <body>
-  <h1>Gửi chữ và ảnh vào bot Telegram</h1>
-  <form action="" method="post">
-    <input type="text" name="text" placeholder="Nhập chữ">
-    <input type="file" name="image">
-    <input type="submit" value="Gửi">
-  </form>
+  <div class="container">
+    <h1 class="title">Gửi chữ và ảnh vào bot Telegram</h1>
+
+    <form action="" method="post" enctype="multipart/form-data">
+      <div class="text">
+        <input type="text" name="text" placeholder="Nhập chữ">
+      </div>
+
+      <div class="image">
+        <input type="file" name="image">
+      </div>
+
+      <input type="submit" value="Gửi">
+    </form>
+  </div>
 
   <script>
     function sendMessage() {
