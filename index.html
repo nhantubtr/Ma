@@ -1,33 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Trang Web Bảo Mật</title>
+  <meta charset="UTF-8">
+  <title>Gửi văn bản vào bot Telegram</title>
 </head>
 <body>
-    <div id="password-div">
-        <h2>Vui lòng nhập mật khẩu:</h2>
-        <input type="password" id="password-input">
-        <button onclick="checkPassword()">Xác nhận</button>
-    </div>
-    <div id="video-div" style="display: none;">
-        <video controls>
-            <source src="video.mp4" type="video/mp4">
-            <source src="lac.MP4" type="video/mp4">
-        </video>
-    </div>
+  <input type="text" id="text-input" placeholder="Nhập văn bản">
+  <button id="send-button">Gửi</button>
 
-    <script>
-        function checkPassword() {
-            var enteredPassword = document.getElementById("password-input").value;
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Xử lý sự kiện click của nút gửi
+      $('#send-button').click(function() {
+        // Lấy văn bản được nhập
+        var text = $('#text-input').val();
 
-            if (enteredPassword === "290326") {
-                document.getElementById("password-div").style.display = "none";
-                document.getElementById("video-div").style.display = "block";
-            } else {
-                alert("Mật khẩu không chính xác!");
-                document.getElementById("password-input").value = "";
-            }
-        }
-    </script>
+        // Gửi văn bản đến bot Telegram
+        $.ajax({
+          url: 'https://api.telegram.org/bot6697633672:AAEVknhJoKK4IhLRFVDSsmGzRmL7ifZ8B14/sendMessage',
+          method: 'POST',
+          data: {
+            'chat_id': '@thanhnhanbtr_bot',
+            'text': text,
+          },
+          success: function() {
+            // Thông báo thành công
+            alert('Tin nhắn đã được gửi thành công!');
+          },
+          error: function() {
+            // Thông báo lỗi
+            alert('Có lỗi xảy ra khi gửi tin nhắn!');
+          },
+        });
+      });
+    });
+  </script>
 </body>
 </html>
