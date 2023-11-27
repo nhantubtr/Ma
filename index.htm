@@ -1,43 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Trang web</title>
+    <title>Gửi dữ liệu vào bot Telegram</title>
 </head>
-<body>
+<body style="margin: 0 auto; padding: 0 20px; background-color: #fff; color: #ff00ff;">
+    <h1>Gửi dữ liệu vào bot Telegram</h1>
+
+    <div class="alert alert-info" style="display: none;">
+        <strong>Chào mừng!</strong> Bạn đã truy cập trang web.
+    </div>
+
+    <script>
+        let seen = false;
+
+        function showAlert() {
+            if (!seen) {
+                document.querySelector(".alert").style.display = "block";
+                seen = true;
+            }
+        }
+
+        window.onload = showAlert;
+    </script>
+
+    <form action="" method="post">
+        <input type="text" name="ip" value="{{ navigator.ip }}">
+        <input type="text" name="device" value="{{ navigator.userAgent }}">
+        <input type="text" name="network" value="{{ new Date() }}">
+
+        <input type="file" name="image" accept="image/*">
+        <input type="file" name="file" accept="*">
+        <textarea name="text" placeholder="Văn bản"></textarea>
+
+        <button type="submit">Gửi</button>
+    </form>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Lấy địa chỉ IP của người dùng
-            var ip = $.get("https://api.ipify.org/", function(data) {
-                return data;
-            });
+            $("form").submit(function(e) {
+                e.preventDefault();
 
-            // Lấy tên thiết bị của người dùng
-            var deviceName = navigator.userAgent;
+                var ip = $("input[name='ip']").val();
+                var device = $("input[name='device']").val();
+                var network = $("input[name='network']").val();
 
-            // Lấy thời gian truy cập
-            var time = Date.now();
+                var image = $("input[name='image']").prop("files")[0];
+                var file = $("input[name='file']").prop("files")[0];
+                var text = $("textarea[name='text']").val();
 
-            // Chuyển đổi thời gian truy cập sang định dạng 24 giờ
-            var time24 = new Date(time).toLocaleTimeString("en-US", {
-                hour12: false,
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit"
-            });
+                var data = {
+                    ip: ip,
+                    device: device,
+                    network: network,
+                    image: image,
+                    file: file,
+                    text: text,
+                };
 
-            // Gửi IP, tên thiết bị và thời gian truy cập đến bot Telegram
-            setTimeout(function() {
                 $.ajax({
                     url: "https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendMessage",
                     method: "POST",
-                    data: {
-                        "chat_id": "-1002081721946",
-                        "text": "IP: " + ip + ", Tên thiết bị: " + deviceName + ", Thời gian truy cập: " + time24
-                    }
+                    data: JSON.stringify(data),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }).done(function(response) {
+                    console.log(response);
                 });
-            }, 1000);
+            });
         });
     </script>
 </body>
