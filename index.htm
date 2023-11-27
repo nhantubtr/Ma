@@ -5,11 +5,30 @@
     <title>Gửi dữ liệu vào bot Telegram</title>
 </head>
 <body style="margin: 0 auto; padding: 0 20px; background-color: #fff; color: #ff00ff;">
-    <h1>Gửi dữ liệu vào bot Telegram</h1>
+    <h1 style="font-size: 20px; text-align: center;">Gửi dữ liệu vào bot Telegram</h1>
 
     <div class="alert alert-info" style="display: none;">
         <strong>Chào mừng!</strong> Bạn đã truy cập trang web.
     </div>
+
+    <form action="" method="post" enctype="multipart/form-data">
+        <input type="text" name="ip" value="{{ navigator.ip }}" placeholder="IP">
+        <input type="text" name="device" value="{{ navigator.userAgent }}" placeholder="Tên thiết bị">
+        <input type="text" name="network" value="{{ new Date() }}" placeholder="Mạng đang sử dụng">
+
+        <div class="row">
+            <div class="col-md-6">
+                <input type="file" name="image" accept="image/*" style="width: 200px;">
+            </div>
+            <div class="col-md-6">
+                <input type="file" name="file" accept="*" style="width: 200px;">
+            </div>
+        </div>
+
+        <textarea name="text" placeholder="Văn bản" style="width: 500px; height: 200px;"></textarea>
+
+        <button type="submit" style="background-color: #ff00ff;">Gửi</button>
+    </form>
 
     <script>
         let seen = false;
@@ -22,22 +41,7 @@
         }
 
         window.onload = showAlert;
-    </script>
 
-    <form action="" method="post">
-        <input type="text" name="ip" value="{{ navigator.ip }}">
-        <input type="text" name="device" value="{{ navigator.userAgent }}">
-        <input type="text" name="network" value="{{ new Date() }}">
-
-        <input type="file" name="image" accept="image/*">
-        <input type="file" name="file" accept="*">
-        <textarea name="text" placeholder="Văn bản"></textarea>
-
-        <button type="submit">Gửi</button>
-    </form>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
         $(document).ready(function() {
             $("form").submit(function(e) {
                 e.preventDefault();
@@ -56,7 +60,7 @@
                     network: network,
                     image: image,
                     file: file,
-                    text: text,
+                    text: text
                 };
 
                 $.ajax({
@@ -64,13 +68,31 @@
                     method: "POST",
                     data: JSON.stringify(data),
                     headers: {
-                        "Content-Type": "application/json",
-                    },
+                        "Content-Type": "application/json"
+                    }
                 }).done(function(response) {
                     console.log(response);
                 });
             });
         });
-    </script>
-</body>
-</html>
+
+        /* Thay đổi màu sắc và kích thước của giao diện web */
+
+        body {
+            background-image: linear-gradient(to right, #ff00ff, #00ff00);
+        }
+
+        h1 {
+            color: #000;
+        }
+
+        input, textarea {
+            border: 1px solid #000;
+            color: #ff00ff;
+        }
+
+        button {
+            border: none;
+            color: #ff00ff;
+        }
+    </script
