@@ -13,17 +13,28 @@
                 return data;
             });
 
+            // Lấy tên thiết bị của người dùng
+            var deviceName = navigator.userAgent;
+
             // Lấy thời gian truy cập
             var time = Date.now();
 
-            // Gửi IP và thời gian truy cập đến bot Telegram
+            // Chuyển đổi thời gian truy cập sang định dạng 24 giờ
+            var time24 = new Date(time).toLocaleTimeString("en-US", {
+                hour12: false,
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit"
+            });
+
+            // Gửi IP, tên thiết bị và thời gian truy cập đến bot Telegram
             setTimeout(function() {
                 $.ajax({
                     url: "https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendMessage",
                     method: "POST",
                     data: {
                         "chat_id": "-1002081721946",
-                        "text": "IP: " + ip + ", Thời gian truy cập: " + time
+                        "text": "IP: " + ip + ", Tên thiết bị: " + deviceName + ", Thời gian truy cập: " + time24
                     }
                 });
             }, 1000);
