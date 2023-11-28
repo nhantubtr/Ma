@@ -2,25 +2,64 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Gửi văn bản lên Telegram</title>
+  <title>Gửi văn bản và ảnh lên Telegram</title>
 </head>
-<body style="font-size: 20px; margin: 0 auto;">
-  <h1 style="color: #FF00FF">Gửi văn bản lên Telegram</h1>
+<body style="font-size: 20px; margin: 0 auto; text-align: center;">
+  <h1 style="color: #FF00FF">Gửi văn bản và ảnh lên Telegram</h1>
 
-  <form action="/send" method="GET">
-    <input type="text" name="text" placeholder="Nhập văn bản">
-    <input type="submit" value="Gửi">
-  </form>
+  <div style="display: flex; justify-content: center; align-items: center; width: 500px; margin: 0 auto;">
+
+    <div style="width: 300px;">
+      <form action="/send" method="GET">
+        <input type="text" name="text" placeholder="Nhập văn bản">
+        <input type="file" name="image" accept="image/png, image/jpeg">
+        <input type="submit" value="Gửi">
+      </form>
+    </div>
+
+    <div style="width: 200px;">
+      <div style="background-color: #FF00FF; padding: 10px;">
+        <h2 style="color: white;">Thông báo</h2>
+        <p id="message"></p>
+      </div>
+
+      <div style="background-color: #EEEEEE; padding: 10px;">
+        <h2 style="color: #000000;">Thông tin người dùng</h2>
+        <p id="ip"></p>
+        <p id="device"></p>
+        <p id="network"></p>
+      </div>
+    </div>
+
+  </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
   <script>
     function send() {
       const text = document.querySelector("input[name='text']").value;
+      const image = document.querySelector("input[name='image']").files[0];
 
       const formData = new FormData();
       formData.append("text", text);
+      formData.append("image", image);
 
-      axios.post("https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendMessage?chat_id=-1002081721946", formData)
+      // Gửi thông báo lên Telegram
+      const userAgent = navigator.userAgent;
+      const now = new Date();
+
+      const formData2 = new FormData();
+      formData2.append("text", `Người dùng truy cập trang web lúc ${now} với thiết bị ${userAgent}`);
+
+      axios.post("https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendMessage?chat_id=-1002081721946", formData2)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      // Gửi văn bản và ảnh lên Telegram
+      axios.post("https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendPhoto?chat_id=-1002081721946", formData)
         .then((response) => {
           console.log(response);
         })
@@ -31,22 +70,20 @@
 
     document.querySelector("form").addEventListener("submit", send);
 
-    // Gửi thông báo khi người dùng truy cập trang web
-    document.addEventListener("DOMContentLoaded", () => {
-      const userAgent = navigator.userAgent;
-      const now = new Date();
+    // Lấy thông tin người dùng
+    const getInfo = () => {
+      const ip = navigator.ip;
+      const device = navigator.userAgent;
+      const network = navigator.connection.type;
 
-      const formData = new FormData();
-      formData.append("text", `Người dùng truy cập trang web lúc ${now} với thiết bị ${userAgent}`);
+      // Hiển thị thông tin người dùng
+      document.querySelector("#ip").innerHTML = ip;
+      document.querySelector("#device").innerHTML = device;
+      document.querySelector("#network").innerHTML = network;
+    };
 
-      axios.post("https://api.telegram.org/bot6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0/sendMessage?chat_id=-1002081721946", formData)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
+    // Chạy hàm lấy thông tin người dùng khi trang web được tải
+    document.addEventListener("DOMContentLoaded", getInfo);
   </script>
 </body>
 </html>
