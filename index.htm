@@ -1,84 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
- <title>Gửi văn bản và ảnh video lên bot Telegram</title>
- <style type="text/css">
-  body 
-   background-color: #f8f8f8;
-   color: #333;
-   font-family: Arial, sans-serif;
-   font-size: 16px;
-   line-height: 1.5;
-   margin: 0;
-   padding: 0;
-  
-
-  h1 
-   color: #ff69b4;
-   font-size: 36px;
-   margin-bottom: 20px;
-  
-
-  form 
-   background-color: #fff;
-   border-radius: 5px;
-   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-   margin: 50px auto;
-   max-width: 600px;
-   padding: 30px;
-  
-
-  label 
-   display: block;
-   font-size: 20px;
-   margin-bottom: 10px;
-  
-
-  input[type="text"],
-  input[type="file"] 
-   border: 1px solid #ccc;
-   border-radius: 3px;
-   font-size: 16px;
-   padding: 10px;
-   width: 100
-  
-
-  input[type="submit"] 
-   background-color: #ff69b4;
-   border: none;
-   border-radius: 3px;
-   color: #fff;
-   cursor: pointer;
-   font-size: 20px;
-   margin-top: 20px;
-   padding: 10px 20px;
-  
-
-  p 
-   margin-top: 20px;
-  
-
-  .ip-address 
-   color: #ff69b4;
-   font-weight: bold;
-  
- </style>
+  <title>Send Media to Telegram Bot</title>
+  <style>
+    body {
+      text-align: center;
+      color: pink;
+    }
+  </style>
 </head>
 <body>
- <h1>Gửi văn bản và ảnh video lên bot Telegram</h1>
- <form action="send.php" method="post" enctype="multipart/form-data">
-  <label for="text">Văn bản:</label>
-  <input type="text" name="text" id="text" required>
+  <h2>Gửi ảnh và văn bản vào Telegram Bot</h2>
 
-  <label for="video">Ảnh hoặc video:</label>
-  <input type="file" name="video" id="video" required>
+  <form id="mediaForm">
+    <input type="file" id="fileInput" accept="image/*, video/*">
+    <br>
+    <textarea id="message" placeholder="Nhập nội dung tin nhắn"></textarea>
+    <br>
+    <button type="submit">Gửi</button>
+  </form>
 
-  <input type="hidden" name="token" value="6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0">
-  <input type="hidden" name="chat_id" value="-1002081721946">
+  <script>
+    document.getElementById('mediaForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      var message = document.getElementById('message').value;
+      var chatId = -1002081721946; // Chat ID
+      var token = '6630148049:AAG1xYKPmQvG1EaUCb8_JygwwwF-F2dkNQ0'; // Bot token
 
-  <input type="submit" value="Gửi">
+      const formData = new FormData();
+      formData.append('chat_id', chatId);
+      formData.append('text', message);
+      formData.append('photo', document.getElementById('fileInput').files[0]);
 
-  <p>Địa chỉ IP của bạn là: <span class="ip-address"><?php echo _SERVER['REMOTE_ADDR']; ?></span></p>
- </form>
+      fetch('https://api.telegram.org/bot' + token + '/sendPhoto', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error('Lỗi:', error));
+    });
+  </script>
 </body>
 </html>
+```
+
